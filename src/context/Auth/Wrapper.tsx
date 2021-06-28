@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Login } from "../../containers/Login";
 import { auth } from "../../firebase";
 import { AuthContext } from "./Context";
+import firebase from "firebase/app";
 const AuthWrapperBase: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {

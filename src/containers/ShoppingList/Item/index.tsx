@@ -1,10 +1,29 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { db } from "../../../firebase";
 import { useAuth } from "../../../hooks/useAuth";
-const ShoppingListItemBase: React.FC<{ data: any; list: string }> = ({
-  data,
-  list,
-}) => {
+import firebase from "firebase/app";
+
+export interface ShoppingListItemData {
+  id: string;
+  name: string;
+  price: number;
+  qtd: number;
+  total: number;
+  date: Date;
+}
+
+export interface ShoppingListItemDataFirestore {
+  name: string;
+  price: number;
+  qtd: number;
+  total: number;
+  date: firebase.firestore.Timestamp;
+}
+
+const ShoppingListItemBase: React.FC<{
+  data: ShoppingListItemData;
+  list: string;
+}> = ({ data, list }) => {
   const user = useAuth();
   const { id, name, price, qtd } = data;
   const handleDelete = useCallback(() => {
@@ -29,17 +48,30 @@ const ShoppingListItemBase: React.FC<{ data: any; list: string }> = ({
       }
     }
   }, [user, list, id, name]);
+
+  const formatedPrice = Intl.NumberFormat(undefined, {
+    minimumFractionDigits: 2,
+  }).format(price);
+
+  const formatedTotalPrice = Intl.NumberFormat(undefined, {
+    minimumFractionDigits: 2,
+  }).format(price * qtd);
+
+  const formattedQuantity = Intl.NumberFormat(undefined, {
+    minimumIntegerDigits: 2,
+  }).format(qtd);
   return (
-    <li className="grid grid-cols-7 items-center">
-      <span>{qtd}</span>
-      <span className="col-span-3">{name}</span>
-      <span>{price}</span>
-      <span className="text-red-400">{price * qtd}</span>
+    <li className="grid grid-cols-7 items-center gap-x-3">
+      <span className="col-span-4">
+        <span className="text-gray-600">{formattedQuantity}</span> {name}
+      </span>
+      <span className="text-gray-600 text-right">{formatedPrice}</span>
+      <span className="text-red-400  text-right">{formatedTotalPrice}</span>
       <button
         onClick={handleDelete}
-        className="block outline-none border-0 w-full bg-gray-700 hover:bg-gray-600 active:bg-gray-500 focus:bg-gray-400 mt-2 uppercase px-2 py-2"
+        className="block outline-none border-0 w-full bg-gray-800 hover:bg-gray-700 active:bg-gray-600 focus:bg-gray-500 mt-2 uppercase px-2 py-2"
       >
-        x
+        ❌
       </button>
     </li>
   );
