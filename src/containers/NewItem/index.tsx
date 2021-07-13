@@ -13,11 +13,7 @@ const NewItemBase: React.FC<{ list: string | null }> = ({ list }) => {
   const handleSubmit = useCallback(() => {
     if (user && list) {
       setState("CREATING");
-      db.collection("users")
-        .doc(user.uid)
-        .collection("lists")
-        .doc(list)
-        .collection("items")
+      db.collection(`users/${user.uid}/lists/${list}/items`)
         .add({
           name,
           price,

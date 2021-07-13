@@ -31,10 +31,7 @@ const EditListBase: React.FC<{
           setState("WORKING");
           try {
             await db
-              .collection("users")
-              .doc(user.uid)
-              .collection("lists")
-              .doc(list.id)
+              .doc(`users/${user.uid}/lists/${list.id}`)
               .update({ name: name, budget: budget });
             setState("IDLE");
             window.alert("List edited");
@@ -58,12 +55,7 @@ const EditListBase: React.FC<{
       if (user) {
         setState("WORKING");
         try {
-          await db
-            .collection("users")
-            .doc(user.uid)
-            .collection("lists")
-            .doc(list.id)
-            .delete();
+          await db.doc(`users/${user.uid}/lists/${list.id}`).delete();
           window.alert("List deleted!");
           onListDelete();
         } catch (e) {

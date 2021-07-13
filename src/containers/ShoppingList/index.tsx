@@ -143,12 +143,9 @@ const ShoppingListBase: React.FC<{ list: string | null }> = ({ list }) => {
         setListInfo(info);
       };
       fetchInfo();
+
       listener.current = db
-        .collection("users")
-        .doc(user.uid)
-        .collection("lists")
-        .doc(list)
-        .collection("items")
+        .collection(`users/${user.uid}/lists/${list}/items`)
         .onSnapshot((itemsSnap) => {
           setItems(
             itemsSnap.docs.map((item) => {
@@ -157,7 +154,10 @@ const ShoppingListBase: React.FC<{ list: string | null }> = ({ list }) => {
               return {
                 ...data,
                 id: item.id,
-                date: typeof date !== "undefined" ? date.toDate() : new Date(),
+                date:
+                  typeof date !== "undefined" && date !== null
+                    ? date.toDate()
+                    : new Date(),
               } as ShoppingListItemData;
             })
           );

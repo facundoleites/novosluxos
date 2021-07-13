@@ -18,9 +18,7 @@ const NewShoppingListBase: React.FC<{ setList: (newlistid: string) => void }> =
             setState("CREATING");
             try {
               const { id } = await db
-                .collection("users")
-                .doc(user.uid)
-                .collection("lists")
+                .collection(`users/${user.uid}/lists`)
                 .add({ name: name, date: now(), budget: budget });
               setState("IDLE");
               window.alert("list created");

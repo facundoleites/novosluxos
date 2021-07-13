@@ -14,9 +14,7 @@ const ListBase: React.FC<{ height: number }> = ({ height }) => {
       const getCurrentList = async () => {
         setStatus("FETCHING");
         const snap = await db
-          .collection("users")
-          .doc(user.uid)
-          .collection("lists")
+          .collection(`users/${user.uid}/lists`)
           .orderBy("date", "desc")
           .limit(1)
           .get();

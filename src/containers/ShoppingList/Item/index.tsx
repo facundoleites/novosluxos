@@ -32,14 +32,7 @@ const ShoppingListItemBase: React.FC<{
     if (user) {
       const deleteItem = async () => {
         try {
-          await db
-            .collection("users")
-            .doc(user.uid)
-            .collection("lists")
-            .doc(list)
-            .collection("items")
-            .doc(id)
-            .delete();
+          await db.doc(`users/${user.uid}/lists/${list}/items/${id}`).delete();
         } catch (e) {
           console.log("error", e);
         }
