@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Loading } from "../../components/Loading";
 import { db } from "../../firebase";
 import { useAuth } from "../../hooks/useAuth";
 import { NewItem } from "../NewItem";
-import { NewShoppingList } from "../NewShoppingList";
 import { ShoppingList } from "../ShoppingList";
-const ListBase = () => {
+import { ShoppingListHeader } from "../ShoppingListHeader";
+const ListBase: React.FC<{ height: number }> = ({ height }) => {
   const user = useAuth();
   const [status, setStatus] = useState<"IDLE" | "FETCHING">("IDLE");
   const [list, setList] = useState<string | null>(null);
@@ -34,11 +35,11 @@ const ListBase = () => {
   return (
     <>
       {status === "FETCHING" ? (
-        <p>loading...</p>
+        <Loading />
       ) : (
         <>
+          <ShoppingListHeader setList={setList} list={list} height={height} />
           <ShoppingList list={list} />
-          <NewShoppingList />
           <NewItem list={list} />
         </>
       )}

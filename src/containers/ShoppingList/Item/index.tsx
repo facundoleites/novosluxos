@@ -2,6 +2,8 @@ import React, { useCallback } from "react";
 import { db } from "../../../firebase";
 import { useAuth } from "../../../hooks/useAuth";
 import firebase from "firebase/app";
+import Icon from "@mdi/react";
+import { mdiClose } from "@mdi/js";
 
 export interface ShoppingListItemData {
   id: string;
@@ -61,7 +63,7 @@ const ShoppingListItemBase: React.FC<{
     minimumIntegerDigits: 2,
   }).format(qtd);
   return (
-    <li className="grid grid-cols-7 items-center gap-x-3">
+    <li className="grid grid-cols-7 items-center gap-x-3 py-1">
       <span className="col-span-4">
         <span className="text-gray-600">{formattedQuantity}</span> {name}
       </span>
@@ -69,9 +71,9 @@ const ShoppingListItemBase: React.FC<{
       <span className="text-red-400  text-right">{formatedTotalPrice}</span>
       <button
         onClick={handleDelete}
-        className="block outline-none border-0 w-full bg-gray-800 hover:bg-gray-700 active:bg-gray-600 focus:bg-gray-500 mt-2 uppercase px-2 py-2"
+        className="inline outline-none border-0 w-full text-gray-700 hover:text-gray-100 hover:bg-gray-700 active:bg-gray-600 focus:bg-gray-500 uppercase px-2 py-2 rounded-full"
       >
-        ❌
+        <Icon path={mdiClose} size={1} className="inline" />
       </button>
     </li>
   );

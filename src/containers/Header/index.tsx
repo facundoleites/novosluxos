@@ -1,11 +1,12 @@
+import { mdiLogout } from "@mdi/js";
+import Icon from "@mdi/react";
 import React from "react";
 import { auth } from "../../firebase";
 import { useAuth } from "../../hooks/useAuth";
 const HeaderBase = () => {
   const user = useAuth();
-  console.log("HeaderBase -> user", user);
   return (
-    <header className="flex justify-between items-center">
+    <header className="flex justify-between items-center ">
       <h1>Luxos</h1>
       {user ? (
         <div className="flex items-center">
@@ -19,7 +20,7 @@ const HeaderBase = () => {
               }
             }}
           >
-            x
+            <Icon path={mdiLogout} size={1} className="inline" />
           </button>
         </div>
       ) : (

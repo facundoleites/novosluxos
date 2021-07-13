@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { Loading } from "../../components/Loading";
 import { auth } from "../../firebase";
 const LoginBase = () => {
   const [login, setLogin] = useState("");
@@ -7,7 +8,6 @@ const LoginBase = () => {
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      console.log({ login, password });
       const signIn = async () => {
         setState("PROCESSING");
         try {
@@ -61,7 +61,7 @@ const LoginBase = () => {
         {state === "IDLE" ? null : state === "ERROR" ? (
           <div className="px-2 py-2 bg-red-900">ops!</div>
         ) : state === "PROCESSING" ? (
-          <p>processing...</p>
+          <Loading />
         ) : null}
         <button
           className="block text-center outline-none border-0 w-full bg-gray-900 hover:bg-gray-800 active:bg-gray-700 focus:bg-gray-600 mt-2 uppercase px-2 py-2"

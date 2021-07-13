@@ -24,13 +24,13 @@ function App() {
     >
       <div className="container mx-auto px-2">
         <AuthWrapper>
-          <div className="h-screen flex flex-col" style={{ height: height }}>
+          <div className="h-screen flex flex-col " style={{ height: height }}>
             <Header />
             <div
               className="flex flex-1 flex-col"
               style={{ height: height - 40 }}
             >
-              <List />
+              <List height={height} />
             </div>
           </div>
         </AuthWrapper>
